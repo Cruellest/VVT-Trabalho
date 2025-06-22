@@ -1,10 +1,10 @@
 import { getCurrentDateTime } from '../helpers/date.helper';
 
 
+const delay = 100
 const qntRubricas = 9;
 const qntInfoComplementares = 5;
 const qntFaixas = 5;
-const delay = 100
 const qntDocumentos = 2;
 const qntDocumentosPessoais = 5;
 const qntPerguntas = 5;
@@ -122,11 +122,12 @@ describe('Teste E2E - Edital Completo (E.C.)', () => {
 
       //O Valor minimo persiste entre a criação de diversas faixas, isso vai virar issue:
       cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMinimo"]').type(`${'{backspace}'.repeat(5)} ${i * 1000}`,{delay: 0});
-      cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMaximo"]').type(`${i * 2000}`,{delay: 0});
+      cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMaximo"]').type(`${(i * 1000) + 500}`,{delay: 0});
       cy.get('[data-cy="faixaFinanciamentoUnsaved.observacao"]').type(`Observação ${i}`,{delay: 0})
       cy.get('[data-cy="faixaFinanciamento-confirmar"]').click();
     }
 
+    
     // Documentos
     cy.get('[data-cy="documentos"]').click();
     
@@ -140,7 +141,7 @@ describe('Teste E2E - Edital Completo (E.C.)', () => {
         cy.get('[data-cy="documentoPropostaEdital--expandable-item"] > .MuiAccordionSummary-root').click();
         cy.get(`[data-cy="documentoPropostaEdital.${i}.nome"]`).type(`Documento de Proposta ${i+1}`, { delay: 0 });
         cy.get(`[data-cy="documentoPropostaEdital.${i}.descricao"]`).type(`Descrição do Documento de Proposta ${i+1}`, { delay: 0 });
-        cy.get(`[data-cy="documentoPropostaEdital.${i}.tamanhoArquivo"]`).type(`${10 * (i+1)}`);
+        cy.get(`[data-cy="documentoPropostaEdital.${i}.tamanhoArquivo"]`).type(`${5}`);
 
         //Issue: Falta especificar o tipo GB? mb? kb?
         cy.get(`[data-cy="documentoPropostaEdital.${i}.formatoArquivo"]`).type('{downArrow}{enter}', { delay: 0});
@@ -169,7 +170,10 @@ describe('Teste E2E - Edital Completo (E.C.)', () => {
         
         cy.get('[data-cy="pergunta--expandable-item"] > .MuiAccordionSummary-root').click();
         cy.get(`[data-cy="pergunta.${i}.pergunta"]`).type(`Pergunta Descrição do Projeto ${i+1}`, { delay: 0 });
-        cy.get(`[data-cy="pergunta.${i}.tipoResposta"]`).type(`${'{downArrow}'.repeat(i+1)}{enter}`, { delay: delay });
+        cy.get(`[data-cy="pergunta.${i}.tipoResposta"]`).type(`${'{downArrow}'.repeat(1)}{enter}`, { delay: delay });
+        cy.get(`[data-cy="pergunta.${i}.descritiva.tipoRestricao"]`).type(`${'{downArrow}'.repeat(1)}{enter}`, { delay: delay });
+        cy.get(`[data-cy="pergunta.${i}.descritiva.maximo"]`).type('{backspace}144', { delay: 0 });
+        cy.get(`[data-cy="pergunta.${i}.descritiva.minimo"]`).type('{backspace}1', { delay: 0 });
 
         cy.wait(delay);
         }
