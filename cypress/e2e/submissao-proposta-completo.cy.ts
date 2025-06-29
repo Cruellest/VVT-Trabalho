@@ -40,9 +40,7 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     const seletorDeTodosOsItens =
       '[data-cy^="formularioPropostaInformacaoComplementar.pergunta-23-item-"]';
 
-    cy.get(seletorDeTodosOsItens)
-      .eq(4) // Pega o quinto item da lista (lembre-se: o índice é 4)
-      .click(); // Ou .check(), se for um radio button ou checkbox.
+    cy.get(seletorDeTodosOsItens).eq(4).click();
     cy.get(
       '[data-cy="formularioPropostaInformacaoComplementar.pergunta-25-item-energias-renovav"]'
     ).click();
@@ -63,12 +61,11 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
 
     cy.get('[data-cy="abrangencia-adicionar"]').click();
     cy.get('[data-cy="abrangencia.0.estadoId"]').click();
-    cy.contains("li", "Mato Grosso do Sul").click(); // Opções vazia por alguns segundos pode virar issue
+    cy.contains("li", "Mato Grosso do Sul").click();
 
     cy.get('[data-cy="abrangencia.0.abrangenciaMunicipio"]').click();
     cy.contains("li", "Campo Grande").find('input[type="checkbox"]').check();
 
-    // Passo 3: Encontra "Dourados" e também marca a sua checkbox.
     cy.contains("li", "Dourados").find('input[type="checkbox"]').check();
 
     cy.get('[data-cy="abrangencia-adicionar"]').click();
@@ -183,8 +180,8 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     cy.contains("li", "Faixa 3").click();
     cy.get('[data-cy="next-button"]').click();
 
-    cy.get('[data-cy="add-button"]').click();
     // Diárias
+    cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="rubricaDiariaUnsaved.estadoId"]').click();
     cy.contains("li", "Mato Grosso do Sul").click();
     cy.get('[data-cy="rubricaDiariaUnsaved.municipio"]').click();
@@ -195,9 +192,11 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     });
     cy.get('[data-cy="rubricaDiariaUnsaved.mesPrevisto"]').click();
     cy.contains("li", "6").click();
+
+    // Confirmar e Avançar Seção
     cy.get('[data-cy="rubricaDiaria-confirmar"]').click();
     cy.get('[data-cy="add-button"]').click();
-
+    cy.contains("Salvo com sucesso!").should("be.visible");
     cy.get('[data-cy="next-button"]').click();
     // Material de Consumo
     cy.get('[data-cy="add-button"]').click();
@@ -217,8 +216,11 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     );
     cy.get('[data-cy="rubricaMaterialConsumoUnsaved.mesPrevisto"]').click();
     cy.contains("li", "6").click();
+
+    // Confirmar e Avançar Seção
     cy.get('[data-cy="rubricaMaterialConsumo-confirmar"]').click();
     cy.get('[data-cy="add-button"]').click();
+    cy.contains("Salvo com sucesso!").should("be.visible");
     cy.get('[data-cy="next-button"]').click();
 
     // Material Permanente
@@ -239,14 +241,24 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     );
     cy.get('[data-cy="rubricaMaterialPermanenteUnsaved.mesPrevisto"]').click();
     cy.contains("li", "7").click();
+
+    // Confirmar e Avançar Seção
     cy.get('[data-cy="rubricaMaterialPermanente-confirmar"]').click();
     cy.get('[data-cy="next-button"]').click();
-    //Passagens
 
+    //Passagens
     cy.get('[data-cy="add-button"]').click();
 
     cy.get('[data-cy="rubricaPassagemUnsaved.trecho"]').click();
     cy.contains("li", "Nacional").click();
+    cy.get('[data-cy="rubricaPassagemUnsaved.estadoOrigemId"]').click();
+    cy.contains("li", "Mato Grosso do Sul").click();
+    cy.get('[data-cy="rubricaPassagemUnsaved.municipioOrigem"]').click();
+    cy.contains("li", "Campo Grande").click();
+    cy.get('[data-cy="rubricaPassagemUnsaved.estadoDestinoId"]').click();
+    cy.contains("li", "Mato Grosso do Sul").click();
+    cy.get('[data-cy="rubricaPassagemUnsaved.municipioDestino"]').click();
+    cy.contains("li", "Dourados").click();
 
     cy.get('[data-cy="rubricaPassagemUnsaved.tipo"]').click();
     cy.contains("li", "Aérea").click();
@@ -257,15 +269,18 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
 
     cy.get('[data-cy="rubricaPassagemUnsaved.mesPrevisto"]').click();
     cy.contains("li", "7").click();
+
+    // Confirmar e Avançar Seção
     cy.get('[data-cy="rubricaPassagem-confirmar"]').click();
     cy.get('[data-cy="next-button"]').click();
+
     // Hospedagem e Alimentação
     cy.get('[data-cy="add-button"]').click();
 
     cy.get('[data-cy="rubricaHospedagemAlimentacaoUnsaved.estadoId"]').click();
     cy.contains("li", "Mato Grosso do Sul").click();
     cy.get('[data-cy="rubricaHospedagemAlimentacaoUnsaved.municipio"]').click();
-    cy.contains("li", "Campo Grande");
+    cy.contains("li", "Campo Grande").click();
     cy.get(
       '[data-cy="rubricaHospedagemAlimentacaoUnsaved.especificacao"]'
     ).type("GFI", { delay: 0 });
@@ -279,9 +294,145 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     cy.get(
       '[data-cy="rubricaHospedagemAlimentacaoUnsaved.mesPrevisto"]'
     ).click();
-    cy.contains("li", "6");
+    cy.contains("li", "6").click();
 
+    //Confirmar e Avançar Seção
     cy.get('[data-cy="rubricaHospedagemAlimentacao-confirmar"]').click();
+    cy.contains("Salvo com sucesso!").should("be.visible");
     cy.get('[data-cy="next-button"]').click();
+
+    // Serviços de terceiros
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="rubricaServicoTerceiroUnsaved.especificacao"]')
+      .type("JKL", { delay: 0 })
+      .should("have.value", "JKL");
+    cy.get('[data-cy="rubricaServicoTerceiroUnsaved.tipo"]').click();
+    cy.contains("li", "Pessoa Física").click();
+    cy.get('[data-cy="rubricaServicoTerceiroUnsaved.mesPrevisto"]').click();
+    cy.contains("li", "9").click();
+    cy.get('[data-cy="rubricaServicoTerceiroUnsaved.valorTotal"]').type(
+      "10,00",
+      { delay: 0 }
+    );
+
+    //Confirmar e Avançar Seção
+    cy.get('[data-cy="rubricaServicoTerceiro-confirmar"]').click();
+    cy.get('[data-cy="next-button"]').click();
+    cy.contains("Salvo com sucesso!").should("be.visible");
+
+    //Pessoal
+    cy.get('[data-cy="add-button"]').click();
+
+    // Preenche os campos de texto
+    cy.get('[data-cy="rubricaPessoalUnsaved.funcao"]').type(
+      "Pesquisador Sênior",
+      { delay: 0 }
+    );
+    cy.get('[data-cy="rubricaPessoalUnsaved.formacaoProfissional"]').type(
+      "Doutorado em Biologia",
+      { delay: 0 }
+    );
+    cy.get('[data-cy="rubricaPessoalUnsaved.perfilDesejado"]').type(
+      "Experiência com análise de dados genéticos",
+      { delay: 0 }
+    );
+
+    // Seleciona opções nos dropdowns
+    cy.get('[data-cy="rubricaPessoalUnsaved.mesInicio"]').click();
+    cy.contains("li", "6").click(); // Seleciona o Mês 6
+
+    cy.get('[data-cy="rubricaPessoalUnsaved.duracao"]').click();
+    cy.contains("li", "12").click(); // Seleciona Duração de 12 meses
+
+    cy.get('[data-cy="rubricaPessoalUnsaved.cargaHorariaSemanal"]').click();
+    cy.contains("li", "40").click(); // Seleciona 40 horas semanais
+
+    // Preenche os campos de custo
+    // NOTA: Seu código original tinha um seletor duplicado. Assumi que o segundo era para o campo "Valor".
+    cy.get('[data-cy="rubricaPessoalUnsaved.custoHoraCustoMes"]').type(
+      "50,00",
+      { delay: 0 }
+    );
+
+    // TODO: O seletor para o campo "Valor" provavelmente é diferente. Verifique no inspetor.
+    cy.get('[data-cy="rubricaPessoalUnsaved.valorTotal"]').type("700,00", {
+      delay: 0,
+    });
+
+    // Preenche a justificativa
+    // TODO: Verifique o seletor real para este campo.
+    cy.get('[data-cy="rubricaPessoalUnsaved.justificativa"]').type(
+      "Profissional essencial para a execução da análise principal do projeto.",
+      { delay: 0 }
+    );
+
+    // Confirmar e Avançar Seção
+    cy.get('[data-cy="rubricaPessoal-confirmar"]').click(); // TODO: Verifique o seletor do botão de confirmar
+    cy.contains("Salvo com sucesso!").should("be.visible");
+    cy.get('[data-cy="next-button"]').click();
+
+    // Encargos
+    cy.get('[data-cy="add-rubrica-encargo"]').click();
+    cy.get('[data-cy="rubricaEncargoUnsaved.especificacao"]').type("ABC", {
+      delay: 0,
+    });
+    cy.get('[data-cy="rubricaEncargoUnsaved.valorTotal"]').type("20,00", {
+      delay: 0,
+    });
+    cy.get('[data-cy="rubricaEncargoUnsaved.mesPrevisto"]').click();
+    cy.contains("li", "7").click();
+    cy.get('[data-cy="rubricaEncargo-confirmar"]').click();
+    cy.contains("Salvo com sucesso!").should("be.visible");
+    cy.get('[data-cy="next-button"]').click();
+
+    //Bolsas
+    // 1. Clica no botão para abrir o formulário de adição de bolsa
+    cy.get('[data-cy="add-bolsas"]').click();
+
+    // 2. Seleciona a Modalidade da Bolsa
+    cy.get('[data-cy="rubricaBolsaUnsaved.modalidadeBolsaId"]').click();
+    cy.contains("li", "EXP").click();
+
+    // 3. Seleciona o Nível da Bolsa
+    cy.get('[data-cy="rubricaBolsaUnsaved.nivelBolsaId"]').click();
+    cy.get('li[role="option"]').eq(0).click();
+
+    // 4. Preenche a Quantidade
+    cy.get('[data-cy="rubricaBolsaUnsaved.quantidade"]')
+      .type("2")
+      .should("have.value", "2"); // VERIFICAÇÃO
+
+    // 5. Seleciona a Duração
+    cy.get('[data-cy="rubricaBolsaUnsaved.duracao"]').click();
+    cy.contains("li", "12").click();
+
+    //Confirmar e Avançar Seção
+    cy.get('[data-cy="rubricaBolsa-confirmar"]').click();
+    // cy.contains("Salvo com sucesso!").should("be.visible"); // Etapa incosistente documentada na issue 11.
+    cy.get('[data-cy="next-button"]').click();
+
+    //   Consolidação
+    cy.get('[data-cy="next-button"]').click();
+    // Solicitação a fundação
+    cy.get('[data-cy="next-button"]').click();
+    // Anexo - Documentos Pessoais
+    cy.get("#select-categories").click();
+    cy.contains("li", "CPF").click();
+    cy.get('input[type="file"]').selectFile("cypress/fixtures/T1.pdf", {
+      force: true,
+    });
+    cy.get('[data-cy="next-button"]').click();
+    // Anexo Documentos da proposta
+    cy.get("#select-categories").click();
+    cy.contains("li", "Documento de Proposta 2").click();
+    cy.get('input[type="file"]').selectFile("cypress/fixtures/T2.csv", {
+      force: true,
+    });
+    cy.get('[data-cy="next-button"]').click();
+
+    // Termo de Aceite
+    cy.get('[data-cy="termoDeAceiteAceito"]').check();
+    cy.get(".ex40wuf1").click();
+    cy.get(".ex40wuf2").click();
   });
 });
