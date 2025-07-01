@@ -1,0 +1,26 @@
+{
+  "apresentacao": {
+    "interesse": "Explicação detalhada sobre o interesse no projeto, agora vinda de uma fixture.",
+    "objetivos": "Definição clara dos objetivos do projeto, carregados de um arquivo de dados externo.",
+    "areasConhecimento": "Áreas de conhecimento relacionadas, como Biologia, Ecologia e Geologia.",
+    "bolsistas": "Descrição sobre a quantidade e o perfil dos bolsistas, gerenciado via fixture.",
+    "participantes": "Sim, o projeto está aberto a múltiplos participantes de diferentes instituições acadêmicas."
+  },
+  "indicadores": {
+    "artigoCompleto": { "nacional": "5", "internacional": "6" },
+    "livrosCapitulos": { "nacional": "11", "internacional": "23" },
+    "organizacaoEditoracao": { "nacional": "2", "internacional": "12" },
+    "comunicacoesAnais": { "nacional": "20" }
+  },
+  "orcamento": {
+    "diaria": { "estado": "Mato Grosso do Sul", "municipio": "Campo Grande", "numero": "5", "custo": "10,00", "mes": "6" },
+    "materialConsumo": { "especificacao": "ABC", "unidade": "Quilograma", "quantidade": "5", "custo": "2,00", "mes": "6" },
+    "materialPermanente": { "especificacao": "DEF", "origem": "Nacional", "quantidade": "5", "custo": "2,00", "mes": "7" },
+    "passagens": { "trecho": "Nacional", "origemEstado": "Mato Grosso do Sul", "origemMunicipio": "Campo Grande", "destinoEstado": "Mato Grosso do Sul", "destinoMunicipio": "Dourados", "tipo": "Aérea", "custo": "7,00", "quantidade": "10", "mes": "7" },
+    "hospedagem": { "estado": "Mato Grosso do Sul", "municipio": "Campo Grande", "especificacao": "GFI", "quantidade": "5", "custo": "20,00", "mes": "6" },
+    "servicoTerceiro": { "especificacao": "JKL", "tipo": "Pessoa Física", "mes": "9", "valor": "10,00" },
+    "pessoal": { "funcao": "Pesquisador Sênior", "formacao": "Doutorado em Biologia", "perfil": "Experiência com análise de dados genéticos", "mesInicio": "6", "duracao": "12", "cargaHoraria": "40", "custo": "50,00", "valorTotal": "700,00", "justificativa": "Profissional essencial para a execução da análise." },
+    "encargos": { "especificacao": "ABC", "valor": "20,00", "mes": "7" },
+    "bolsa": { "modalidade": "EXP", "nivelIndex": 0, "quantidade": "2", "duracao": "12" }
+  }
+}
