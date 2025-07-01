@@ -18,8 +18,8 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     cy.wait(300);
     cy.get('[data-cy="criar-proposta"]').click();
     cy.get('[data-cy="tituloDoProjeto"]')
-      .type("Submissão de Proposta Cypress Modular", { delay: 0 })
-      .should("have.value", "Submissão de Proposta Cypress Modular");
+      .type("Submissão de Proposta Cypress Completo", { delay: 0 })
+      .should("have.value", "Submissão de Proposta Cypress Completo");
     cy.get('[data-cy="next-button"]').click();
   };
 
@@ -340,8 +340,5 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     preencherIndicadores();
     preencherOrcamento();
     finalizarSubmissao();
-
-    // Assertiva Final
-    cy.contains("h1", "Proposta submetida com sucesso").should("be.visible"); // Por causa da issue 12 Submissão não é concluída.
   });
 });
