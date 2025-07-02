@@ -32,17 +32,28 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     cy.get('[data-cy="abrangencia.0.abrangenciaMunicipio"]').click();
     cy.contains("li", "Aguaí").find('input[type="checkbox"]').check();
     cy.contains("li", "Adolfo").find('input[type="checkbox"]').check();
+
+    // Parte Adicionada
+    cy.get('[data-cy="abrangencia-adicionar"]').click();
+    cy.get('[data-cy="abrangencia.1.estadoId"]').click();
+    cy.contains("li", "Mato Grosso do Sul").click();
+    cy.get('[data-cy="abrangencia.1.abrangenciaMunicipio"]').click();
+    cy.contains("li", "Dourados").find('input[type="checkbox"]').check();
+
+    cy.get('[data-cy="abrangencia-adicionar"]').click();
+    cy.get('[data-cy="abrangencia.2.estadoId"]').click();
+    cy.contains("li", "Mato Grosso").click();
+    cy.get('[data-cy="abrangencia.2.abrangenciaMunicipio"]').click();
+    cy.contains("li", "Água Boa").find('input[type="checkbox"]').check();
     cy.get('[data-cy="next-button"]').click();
   };
 
   const preencherCoordenacao = () => {
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
       // Pula "Dados Pessoais" e "Endereço" por serem seções carregadas pela própria página
       cy.wait(10); // Tempo de espera para aparecer visibilidade de botão
-
       cy.get('[data-cy="next-button"]').click();
     }
-    cy.get('[data-cy="next-button"]').click();
     cy.get('[data-cy="criadoPor.possuiVinculoInstitucional"]').check();
     cy.get(
       ':nth-child(1) > .custom-input-container > .MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root > .MuiAutocomplete-endAdornment > .MuiButtonBase-root > [data-testid="ArrowDropDownIcon"]'
@@ -132,9 +143,13 @@ describe("Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas", 
     // O corpo do teste agora é uma sequência de chamadas para as funções auxiliares.
 
     iniciarProposta();
+    cy.wait(300);
     preencherAbrangencia();
+    cy.wait(300);
     preencherCoordenacao();
+    cy.wait(300);
     preencherIndicadores();
+    cy.wait(300);
     finalizarSubmissao();
   });
 });

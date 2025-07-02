@@ -15,7 +15,7 @@ describe('Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas', 
     cy.get('[data-cy="breadcrumb-home"]').click();
     cy.get('[data-cy="editais-ver-mais"]').click();
     cy.get('[data-cy="visualizar-edital-grupo-13-e-s-006"]').click();
-    cy.wait(300);
+    c
     cy.get('[data-cy="criar-proposta"]').click();
     cy.get('[data-cy="tituloDoProjeto"]')
       .clear()
