@@ -1,81 +1,98 @@
+import { getCurrentDateTime } from '../helpers/date.helper';
+
 describe('Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas', () => {
   beforeEach(() => {
-    // Gancho em nível raíz
-    // executa antes de realizar cada teste(it)
     cy.typelogin(
       'https://novo-sig.ledes.net',
       'grupo13_pesq@sig.com',
       'Grupo13@sig'
-    ); //Acessa a página de login usando as credenciais do usuário e senha.
-  });
-  it('Realiza login no sistema e submete uma proposta', () => {
-    cy.get('[data-cy="breadcrumb-home"]').click(); //Clica no botão "Home" para retornar à página anterior
-    cy.get('[data-cy="editais-ver-mais"]').click();
-
-    //Acessa o edital específico:
-    cy.get('[data-cy="visualizar-edital-grupo-11-e-s-005"]').click(); 
-    cy.wait(300); //Aguarda 300ms para garantir que a página foi carregada completamente
-    cy.get('[data-cy="criar-proposta"]').click(); //Clica no botão "Criar Proposta" para iniciar o processo de criação de uma nova proposta
-    cy.get('[data-cy="tituloDoProjeto"]').type(
-        'Submissão de Proposta Cypress',
-        { delay: 0 },
     );
+  });
 
-    // Preenchimento de campos obrigatórios: Informações Iniciais
-    cy.get('[data-cy="tituloDoProjeto"]').clear().type('Submissão de Proposta Simples Cypress', { delay: 0 });  // Preenchendo o titulo do projeto
-    cy.get('[data-cy="duracao"]').type('{backspace}8'); // Limpa o campo de descrição do projeto
-    cy.get('[data-cy="instituicaoExecutoraId"]').click(); // Clica no campo de instituição executora
-    cy.get('#mui-7-option-3').click(); // Selecionando a instituição executora
+  // Seção: Caracterização
 
-    cy.get('[data-cy="next-button"]').click(); // Clica no botão "Próximo" para avançar para a próxima etapa
-    cy.wait(300); //Aguarda 300ms para garantir que a página foi carregada completamente
+  const iniciarProposta = () => {
+    cy.get('[data-cy="breadcrumb-home"]').click();
+    cy.get('[data-cy="editais-ver-mais"]').click();
+    cy.get('[data-cy="visualizar-edital-grupo-13-e-s-006"]').click();
+    cy.wait(300);
+    cy.get('[data-cy="criar-proposta"]').click();
+    cy.get('[data-cy="tituloDoProjeto"]')
+      .clear()
+      .type('Submissão de Proposta Simples Cypress', { delay: 0 })
+      .should('have.value', 'Submissão de Proposta Simples Cypress');
+    cy.get('[data-cy="instituicaoExecutoraId"]').click();
+    cy.get('#mui-7-option-1').click();
+    cy.get('[data-cy="unidadeExecutoraId"]').click();
+    cy.get('#mui-9-option-1').click();
+    cy.get('[data-cy="next-button"]').click();
+    cy.wait(300);
+  };
 
+  const preencherAbrangencia = () => {
+    cy.get('[data-cy="abrangencia-adicionar"]').click();
+    cy.get('[data-cy="abrangencia.0.estadoId"]').type('{downarrow}{enter}');
+    cy.get('[data-cy="abrangencia.0.abrangenciaMunicipio"]').type('{downarrow}{enter}');
+    cy.wait(300);
+    cy.get('[data-cy="next-button"]').click();
+    cy.wait(300);
+  };
 
-    //Abrangência 
-    cy.get('[data-cy="abrangencia-adicionar"]').click(); // Clica no botão para adicionar abrangência
-    cy.get('[data-cy="abrangencia.0.estadoId"]').type('{downarrow}{enter}'); // Clica no campo de estado
-    cy.get('[data-cy="abrangencia.0.abrangenciaMunicipio"]').type('{downarrow}{enter}'); // Clica no campo de Município
+  const preencherDadosPessoaisEEndereco = () => {
+    cy.get('[data-cy="criadoPor.nomeSocial"]').clear().type('Grupo 13');
+    cy.get('[data-cy="criadoPor.racaCorId"]').type('{downarrow}{enter}');
+    cy.get('[data-cy="criadoPor.paisId"]').type('{downarrow}{enter}');
+    cy.get('[data-cy="next-button"]').click();
+    cy.wait(300);
+    cy.get('[data-cy="criadoPor.endereco.estado"]').type('{downarrow}{enter}');
+    cy.get('[data-cy="criadoPor.endereco.municipio"]').type('{downarrow}{enter}');
+    cy.get('[data-cy="next-button"]').click();
+    cy.wait(300);
+  };
 
-    cy.get('[data-cy="next-button"]').click(); // Clica no botão "Próximo" para avançar para a próxima etapa
-    cy.wait(300); //Aguarda 300ms para garantir que a página foi carregada completamente
+  const preencherDadosAcademicos = () => {
+    cy.get('[data-cy="criadoPor.nivelAcademicoId"]').type('{downarrow}{enter}');
+    cy.get('[data-cy="next-button"]').click();
+    cy.wait(300);
+  };
 
+  const preencherDadosProfissionaisEMembros = () => {
+    cy.get('[data-cy="next-button"]').click();
+    cy.wait(300);
+    cy.get('[data-cy="next-button"]').click();
+    cy.wait(300);
+  };
 
-    //Dados Pessoais
-    cy.get('[data-cy="criadoPor.nomeSocial"]').clear().type('Grupo 13'); // Preenche o campo de nome social
-    cy.get('[data-cy="criadoPor.racaCorId"]').type('{downarrow}{enter}'); // Seleciona a raça/cor 
-    cy.get('[data-cy="criadoPor.paisId"]').type('{downarrow}{enter}'); // Clica no campo de país
+  const preencherAtividades = () => {
+    cy.get('[data-cy="next-button"]').click();
+    cy.wait(300);
+  };
 
-    cy.get('[data-cy="next-button"]').click(); // Clica no botão "Próximo" para avançar para a próxima etapa
-    cy.wait(300); //Aguarda 300ms para garantir que a página foi carregada completamente
+  // Seção: Apresentação
 
-    //Endereço
-    cy.get('[data-cy="criadoPor.endereco.estado"]').type('{downarrow}{enter}'); // Clica no campo de estado
-    cy.get('[data-cy="criadoPor.endereco.municipio"]').type('{downarrow}{enter}'); // Clica no campo de cidade
+  const aceitarTermo = () => {
+    cy.get('[data-cy="termoDeAceiteAceito"]').click();
+    cy.get('[data-cy="menu-verificar-penden"]').click();
+    cy.get('.ex40wuf2 > .MuiButtonBase-root').click();
+  };
 
-    cy.get('[data-cy="next-button"]').click(); // Clica no botão "Próximo" para avançar para a próxima etapa
-    cy.wait(300); //Aguarda 300ms para garantir que a página foi carregada completamente
+  // Seção: Execução do Fluxo Modular
 
-    //Dados Academicos
-    cy.get('[data-cy="criadoPor.instituicaoId"]').type('{downarrow}{enter}'); // Clica no campo de instituição
-    
-    
-    cy.get('[data-cy="criadoPor.nivelAcademicoId"]').type('{downarrow}{enter}'); // Clica no campo de nível acadêmico 
+  it('Realiza login no sistema e submete uma proposta de forma modular', () => {
+    iniciarProposta();
+    preencherAbrangencia();
+    preencherDadosPessoaisEEndereco();
+    preencherDadosAcademicos();
+    preencherDadosProfissionaisEMembros();
+    preencherAtividades();
+    aceitarTermo();
 
-    cy.get('[data-cy="next-button"]').click(); // Clica no botão "Próximo" para avançar para a próxima etapa
-    cy.wait(300); //Aguarda 300ms para garantir que a página foi carregada completamente
+    // Submissão da proposta (descomente se quiser enviar)
+    // cy.get('[data-cy="enviar-proposta"]').click();
 
-    cy.get('[data-cy="next-button"]').click(); // Clica no botão "Próximo" para avançar para a próxima etapa
-    cy.wait(300); //Aguarda 300ms para garantir que a página foi carregada completamente
-
-
-    // Submeter a proposta
-    //cy.get('[data-cy="enviar-proposta"]').click();
-    
-
-    // Validar sucesso
-    //cy.contains('Proposta enviada com sucesso').should('be.visible');
-    // Ou, alternativamente, verificar se aparece na Home
-    //cy.get('[data-cy="breadcrumb-home"]').click();
-    //cy.get('[data-cy="propostas-lista"]').should('contain', 'Submissão de Proposta Cypress');
-  }); 
+    // Validação (descomente para validar sucesso)
+    // cy.contains('Proposta enviada com sucesso').should('be.visible');
+    // cy.get('[data-cy="breadcrumb-home"]').click();
+    // cy.get('[data-cy="propostas-lista"]').should('contain', 'Submissão de Proposta Cypress');
+  });
 });
